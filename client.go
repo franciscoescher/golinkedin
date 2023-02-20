@@ -64,17 +64,23 @@ func (c *Client) GetAuthURL(state string) string {
 }
 
 // Authorize will exchange the code for an access token and
-// use it to create a new http client
-func (c *Client) Authorize(ctx context.Context, code string) error {
+// use it to create a new client with an authorized http client
+func (c *Client) Authorize(ctx context.Context, code string) (*Client, error) {
 	oa2config := c.getOAuth2Config()
 	fmt.Println(oa2config)
 	fmt.Println(code)
 	token, err := oa2config.Exchange(ctx, code)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	c.httpClient = oa2config.Client(ctx, token)
-	return nil
+	new := &Client{
+		clientID:     c.clientID,
+		clientSecret: c.clientSecret,
+		scopes:       c.scopes,
+		redirectURL:  c.redirectURL,
+		httpClient:   oa2config.Client(ctx, token),
+	}
+	return new, nil
 }
 
 // Common struct for error response in linkedin API

@@ -24,7 +24,7 @@ func serve(c *golinkedin.Client, port string, route string) {
 		// reads query params
 		code := r.URL.Query().Get("code")
 
-		err := c.Authorize(context.Background(), code)
+		c, err := c.Authorize(context.Background(), code)
 		if err != nil {
 			log.Fatal(err)
 		}
