@@ -8,7 +8,7 @@ const EndpointPrimaryContact = "https://api.linkedin.com/v2/clientAwareMemberHan
 
 // GetPrimaryContact gets user primary contact. Please note that primary contact is only available with the scope r_liteprofile.
 func (c *Client) GetPrimaryContact() (r PrimaryContact, err error) {
-	resp, err := c.httpClient.Get(EndpointPrimaryContact)
+	resp, err := c.Get(EndpointPrimaryContact)
 	if err != nil {
 		return r, err
 	}

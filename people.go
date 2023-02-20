@@ -13,7 +13,7 @@ func (c *Client) GetPeople(personID string) (r string, err error) {
 	sb.WriteString(EndpointPeopleParts[0])
 	sb.WriteString(personID)
 	sb.WriteString(EndpointPeopleParts[1])
-	resp, err := c.httpClient.Get(sb.String())
+	resp, err := c.Get(sb.String())
 	if err != nil {
 		return r, err
 	}

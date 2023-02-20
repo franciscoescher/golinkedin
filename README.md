@@ -21,24 +21,24 @@ import (
 )
 
 func main() {
-  // first, you need to create a client with your api key credentials
+  // first, you need to create a builder with your api key credentials
   scopes := []string{"r_liteprofile", "r_emailaddress"}
-  client := linkedin.NewClient("CLIENT_ID", "CLIENT_SECRET", scopes, "REDIRECT_URL")
+  builder := linkedin.NewBuilder("CLIENT_ID", "CLIENT_SECRET", scopes, "REDIRECT_URL")
 
   // then, you need to get the auth url to redirect the user to the linkedin login page
-  url := client.GetAuthURL("state")
+  url := builder.GetAuthURL("state")
   fmt.Println(url)
 
   // after user accepts, linkedin will redirect to REDIRECT_URL with a code parameter
-  // you need to use this code to authenticate the client
+  // you need to use this code to authenticate and get the client
   code := "CODE"
-  c, err := client.Authenticate(context.Background(), code)
+  client, err := builder.GetClient(context.Background(), code)
   if err != nil {
     log.Fatal(err)
   }
 
   // now you can use the client to make requests
-  profile, err := c.GetProfile()
+  profile, err := client.GetProfile()
   if err != nil {
     log.Fatal(err)
   }

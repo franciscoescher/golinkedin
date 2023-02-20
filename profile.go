@@ -10,7 +10,7 @@ const EndpointProfile = "https://api.linkedin.com/v2/me?projection=(id,firstName
 // Please note that this is only available with the scope r_liteprofile.
 // Also, vanity name and headline are only available with the scope r_basicprofile.
 func (c *Client) GetProfile() (r Profile, err error) {
-	resp, err := c.httpClient.Get(EndpointProfile)
+	resp, err := c.Get(EndpointProfile)
 	if err != nil {
 		return r, err
 	}

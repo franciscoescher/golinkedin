@@ -19,12 +19,12 @@ func encodeJson(w http.ResponseWriter, data interface{}) {
 	_, _ = w.Write(val)
 }
 
-func serve(c *golinkedin.Client, port string, route string) {
+func serve(b *golinkedin.Builder, port string, route string) {
 	http.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
 		// reads query params
 		code := r.URL.Query().Get("code")
 
-		c, err := c.Authorize(context.Background(), code)
+		c, err := b.GetClient(context.Background(), code)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -74,7 +74,7 @@ func serve(c *golinkedin.Client, port string, route string) {
 	})
 
 	http.HandleFunc("/auth", func(w http.ResponseWriter, r *http.Request) {
-		authUrl := c.GetAuthURL("state")
+		authUrl := b.GetAuthURL("state")
 		_, _ = w.Write([]byte(authUrl))
 	})
 
@@ -96,7 +96,7 @@ func main() {
 
 	fullRedirectURL := fmt.Sprintf("%s:%s%s", redirect_host, redirect_port, redirect_callback_url)
 
-	c := golinkedin.NewClient(clientId, clientSecret, []string{"r_liteprofile", "r_emailaddress"}, fullRedirectURL)
+	c := golinkedin.NewBuilder(clientId, clientSecret, []string{"r_liteprofile", "r_emailaddress"}, fullRedirectURL)
 
 	// to run this test, you need to uncomment the following line and
 	// visit the URL in your browser. You will be redirected to the
