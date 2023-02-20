@@ -32,7 +32,7 @@ func main() {
   // after user accepts, linkedin will redirect to REDIRECT_URL with a code parameter
   // you need to use this code to authenticate the client
   code := "CODE"
-  err := client.Authenticate(context.Background(), code)
+  c, err := client.Authenticate(context.Background(), code)
   if err != nil {
     log.Fatal(err)
   }
@@ -42,7 +42,6 @@ func main() {
   if err != nil {
     log.Fatal(err)
   }
-
   fmt.Println(profile)
 }
 ```
