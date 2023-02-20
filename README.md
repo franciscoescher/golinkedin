@@ -2,13 +2,21 @@
 
 This is a Go client library for the LinkedIn API.
 
-It authenticates with Oauth2.
-
 ## Installation
 
-    go get github.com/franciscoescher/go-linkedin
+    go get github.com/franciscoescher/golinkedin
 
 ## Usage
+
+Fiest, you need to create a client builder with your api key credentials using `golinkedin.NewBuilder`.
+
+Then, you need to get the auth url to redirect the user to the linkedin login page using `builder.GetAuthURL`.
+
+The user needs to access the url, login and accept the permissions. After that, linkedin will redirect to the redirect url with a code parameter.
+
+Finally, You need to use this code to authenticate and get the client using `builder.GetClient`.
+
+This client will be able to call the linkedin api.
 
 ```
 package main
@@ -17,13 +25,13 @@ import (
 	"context"
   "fmt"
 
-  "github.com/franciscoescher/go-linkedin"
+  "github.com/franciscoescher/golinkedin"
 )
 
 func main() {
   // first, you need to create a builder with your api key credentials
   scopes := []string{"r_liteprofile", "r_emailaddress"}
-  builder := linkedin.NewBuilder("CLIENT_ID", "CLIENT_SECRET", scopes, "REDIRECT_URL")
+  builder := golinkedin.NewBuilder("CLIENT_ID", "CLIENT_SECRET", scopes, "REDIRECT_URL")
 
   // then, you need to get the auth url to redirect the user to the linkedin login page
   url := builder.GetAuthURL("state")
