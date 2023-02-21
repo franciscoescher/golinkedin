@@ -30,6 +30,9 @@ type PrimaryContact struct {
 		Handle      string `json:"handle"`
 		HandleTilde struct {
 			EmailAddress string `json:"emailAddress"`
+			PhoneNumber  struct {
+				Number string `json:"number"`
+			} `json:"phoneNumber"`
 		} `json:"handle~"`
 		Primary bool   `json:"primary"`
 		Type    string `json:"type"`
