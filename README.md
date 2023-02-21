@@ -55,3 +55,11 @@ func main() {
 ```
 
 Please, check the example folder for a working example that implements a server that handles the linkedin callback.
+
+## Note
+
+This library is not complete. It only implements the endpoints that I needed.
+
+People endpoint is not tested.
+
+Feel free to contribute.
