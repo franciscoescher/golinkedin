@@ -2,15 +2,21 @@ package golinkedin
 
 import (
 	"encoding/json"
+	"net/http"
 )
 
 const EndpointProfile = "https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,vanityName,localizedHeadline,localizedFirstName,localizedLastName,localizedHeadline,headline,profilePicture(displayImage~:playableStreams))"
 
-// GetProfile gets user profile.
+// ProfileRequest calls profile api.
 // Please note that this is only available with the scope r_liteprofile.
 // Also, vanity name and headline are only available with the scope r_basicprofile.
+func (c *Client) ProfileRequest() (resp *http.Response, err error) {
+	return c.Get(EndpointProfile)
+}
+
+// Same as ProfileRequest but parses the response.
 func (c *Client) GetProfile() (r Profile, err error) {
-	resp, err := c.Get(EndpointProfile)
+	resp, err := c.ProfileRequest()
 	if err != nil {
 		return r, err
 	}

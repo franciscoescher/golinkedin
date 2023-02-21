@@ -2,13 +2,20 @@ package golinkedin
 
 import (
 	"encoding/json"
+	"net/http"
 )
 
 const EndpointPrimaryContact = "https://api.linkedin.com/v2/clientAwareMemberHandles?q=members&projection=(elements*(primary,type,handle~))"
 
-// GetPrimaryContact gets user primary contact. Please note that primary contact is only available with the scope r_liteprofile.
+// PrimaryContactRequest calls primaryContact api.
+// Please note that primary contact is only available with the scope r_liteprofile.
+func (c *Client) PrimaryContactRequest() (resp *http.Response, err error) {
+	return c.Get(EndpointPrimaryContact)
+}
+
+// Same as PrimaryContactRequest but parses the response.
 func (c *Client) GetPrimaryContact() (r PrimaryContact, err error) {
-	resp, err := c.Get(EndpointPrimaryContact)
+	resp, err := c.PrimaryContactRequest()
 	if err != nil {
 		return r, err
 	}
