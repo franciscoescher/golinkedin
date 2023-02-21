@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"html"
 	"log"
 	"net/http"
 	"os"
@@ -22,6 +23,13 @@ func encodeJson(w http.ResponseWriter, data interface{}) {
 func serve(b *golinkedin.Builder, port string, route string) {
 	http.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
 		// reads query params
+		errparam := r.URL.Query().Get("error")
+		if errparam != "" {
+			desc := html.UnescapeString(r.URL.Query().Get("error_description"))
+			msg := fmt.Sprintf("Error: %s\nError Description: %s", errparam, desc)
+			log.Fatal(msg)
+		}
+
 		code := r.URL.Query().Get("code")
 
 		c, err := b.GetClient(context.Background(), code)
@@ -96,6 +104,7 @@ func main() {
 
 	fullRedirectURL := fmt.Sprintf("%s:%s%s", redirect_host, redirect_port, redirect_callback_url)
 
+	// add r_basicprofile to enable GetProfile (if you have the permission)
 	c := golinkedin.NewBuilder(clientId, clientSecret, []string{"r_liteprofile", "r_emailaddress"}, fullRedirectURL)
 
 	// to run this test, you need to uncomment the following line and
