@@ -2,7 +2,6 @@ package golinkedin
 
 import (
 	"context"
-	"fmt"
 
 	"golang.org/x/oauth2"
 )
@@ -62,8 +61,6 @@ func (c *Builder) GetAuthURL(state string) string {
 // use it to create a new client with an authorized http client
 func (c *Builder) GetClient(ctx context.Context, code string) (*Client, error) {
 	oa2config := c.getOAuth2Config()
-	fmt.Println(oa2config)
-	fmt.Println(code)
 	token, err := oa2config.Exchange(ctx, code)
 	if err != nil {
 		return nil, err
