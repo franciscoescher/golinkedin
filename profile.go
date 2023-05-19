@@ -5,26 +5,10 @@ import (
 	"net/http"
 )
 
+// EndpointProfile is the endpoint for profile api.
 const EndpointProfile = "https://api.linkedin.com/rest/me?projection=(id,firstName,lastName,vanityName,localizedHeadline,localizedFirstName,localizedLastName,localizedHeadline,headline,profilePicture(displayImage~:playableStreams))"
 
-// ProfileRequest calls profile api.
-// Please note that this is only available with the scope r_liteprofile.
-// Also, vanity name and headline are only available with the scope r_basicprofile.
-func (c *Client) ProfileRequest() (resp *http.Response, err error) {
-	return c.Get(EndpointProfile)
-}
-
-// Same as ProfileRequest but parses the response.
-func (c *Client) GetProfile() (r Profile, err error) {
-	resp, err := c.ProfileRequest()
-	if err != nil {
-		return r, err
-	}
-	defer resp.Body.Close()
-	err = json.NewDecoder(resp.Body).Decode(&r)
-	return r, err
-}
-
+// Profile is the response from profile api.
 type Profile struct {
 	ErrorResponse
 	ID                 string `json:"id"`
@@ -109,4 +93,22 @@ type Profile struct {
 	} `json:"headline"`
 	LocalizedHeadline string `json:"localizedHeadline"`
 	VanityName        string `json:"vanityName"`
+}
+
+// ProfileRequest calls profile api.
+// Please note that this is only available with the scope r_liteprofile.
+// Also, vanity name and headline are only available with the scope r_basicprofile.
+func (c *client) ProfileRequest() (resp *http.Response, err error) {
+	return c.Get(EndpointProfile)
+}
+
+// Same as ProfileRequest but parses the response.
+func (c *client) GetProfile() (r Profile, err error) {
+	resp, err := c.ProfileRequest()
+	if err != nil {
+		return r, err
+	}
+	defer resp.Body.Close()
+	err = json.NewDecoder(resp.Body).Decode(&r)
+	return r, err
 }

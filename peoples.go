@@ -6,10 +6,11 @@ import (
 	"strings"
 )
 
+// EndpointPeopleListParts are the parts to build the endpoint for people list api.
 var EndpointPeopleListParts = []string{"https://api.linkedin.com/rest/people?ids=List(", ")"}
 
 // PeopleRequest calls people api with multiple person ids.
-func (c *Client) PeopleListRequest(personIDs []string) (resp *http.Response, err error) {
+func (c *client) PeopleListRequest(personIDs []string) (resp *http.Response, err error) {
 	// (id:{Person ID1}),(id:{Person ID2}),(id:{Person ID3})
 	sb := new(strings.Builder)
 	sb.WriteString(EndpointPeopleListParts[0])
@@ -28,7 +29,7 @@ func (c *Client) PeopleListRequest(personIDs []string) (resp *http.Response, err
 // Same as PeopleListRequest but parses the response.
 // This API will only return data for members who haven't limited their Off-LinkedIn Visibility
 // TODO: parse the response into a struct
-func (c *Client) GetPeopleList(personIDs []string) (r string, err error) {
+func (c *client) GetPeopleList(personIDs []string) (r string, err error) {
 	resp, err := c.PeopleListRequest(personIDs)
 	if err != nil {
 		return r, err

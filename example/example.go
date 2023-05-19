@@ -20,7 +20,7 @@ func encodeJson(w http.ResponseWriter, data interface{}) {
 	_, _ = w.Write(val)
 }
 
-func serve(b *golinkedin.Builder, port string, route string) {
+func serve(b golinkedin.BuilderInterface, port string, route string) {
 	http.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
 		// reads query params
 		errparam := r.URL.Query().Get("error")
