@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-const EndpointProfile = "https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,vanityName,localizedHeadline,localizedFirstName,localizedLastName,localizedHeadline,headline,profilePicture(displayImage~:playableStreams))"
+const EndpointProfile = "https://api.linkedin.com/rest/me?projection=(id,firstName,lastName,vanityName,localizedHeadline,localizedFirstName,localizedLastName,localizedHeadline,headline,profilePicture(displayImage~:playableStreams))"
 
 // ProfileRequest calls profile api.
 // Please note that this is only available with the scope r_liteprofile.

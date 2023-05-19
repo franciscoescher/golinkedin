@@ -12,6 +12,9 @@ var (
 		TokenURL:  "https://www.linkedin.com/oauth/v2/accessToken",
 		AuthStyle: oauth2.AuthStyleInParams,
 	}
+	defaultHeaders = map[string]string{
+		"Linkedin-Version": "202305",
+	}
 )
 
 // NewBuilder returns a new linkedin client, not yet authenticated.
@@ -66,6 +69,6 @@ func (c *Builder) GetClient(ctx context.Context, code string) (*Client, error) {
 		return nil, err
 	}
 	client := oa2config.Client(ctx, token)
-	new := &Client{*client}
+	new := &Client{*client, defaultHeaders}
 	return new, nil
 }

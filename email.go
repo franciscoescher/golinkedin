@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-const EndpointEmailAddress = "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))"
+const EndpointEmailAddress = "https://api.linkedin.com/rest/emailAddress?q=members&projection=(elements*(handle~))"
 
 // EmailAddressRequest calls emailAddress api.
 // Please note that email address is only available with the scope r_emailaddress.

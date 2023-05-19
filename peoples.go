@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-var EndpointPeopleListParts = []string{"https://api.linkedin.com/v2/people?ids=List(", ")"}
+var EndpointPeopleListParts = []string{"https://api.linkedin.com/rest/people?ids=List(", ")"}
 
 // PeopleRequest calls people api with multiple person ids.
 func (c *Client) PeopleListRequest(personIDs []string) (resp *http.Response, err error) {

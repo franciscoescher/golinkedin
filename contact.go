@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-const EndpointPrimaryContact = "https://api.linkedin.com/v2/clientAwareMemberHandles?q=members&projection=(elements*(primary,type,handle~))"
+const EndpointPrimaryContact = "https://api.linkedin.com/rest/clientAwareMemberHandles?q=members&projection=(elements*(primary,type,handle~))"
 
 // PrimaryContactRequest calls primaryContact api.
 // Please note that primary contact is only available with the scope r_liteprofile.
