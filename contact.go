@@ -6,7 +6,7 @@ import (
 )
 
 // EndpointPrimaryContact is the endpoint for primary contact api.
-const EndpointPrimaryContact = "https://api.linkedin.com/rest/clientAwareMemberHandles?q=members&projection=(elements*(primary,type,handle~))"
+const EndpointPrimaryContact = "https://api.linkedin.com/v2/clientAwareMemberHandles?q=members&projection=(elements*(primary,type,handle~))"
 
 // PrimaryContact is the response from primary contact api.
 type PrimaryContact struct {

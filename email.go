@@ -6,7 +6,7 @@ import (
 )
 
 // EndpointEmailAddress is the endpoint for email address api.
-const EndpointEmailAddress = "https://api.linkedin.com/rest/emailAddress?q=members&projection=(elements*(handle~))"
+const EndpointEmailAddress = "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))"
 
 // EmailAddress is the response from email address api.
 type EmailAddress struct {
