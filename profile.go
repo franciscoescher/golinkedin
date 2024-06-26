@@ -6,7 +6,7 @@ import (
 )
 
 // EndpointProfile is the endpoint for profile api.
-const EndpointProfile = "https://api.linkedin.com/rest/me?projection=(id,firstName,lastName,vanityName,localizedHeadline,localizedFirstName,localizedLastName,localizedHeadline,headline,profilePicture(displayImage~:playableStreams))"
+const EndpointProfile = "https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,vanityName,localizedHeadline,localizedFirstName,localizedLastName,localizedHeadline,headline,profilePicture(displayImage~:playableStreams))"
 
 // Profile is the response from profile api.
 type Profile struct {

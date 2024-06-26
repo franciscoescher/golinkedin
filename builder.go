@@ -12,9 +12,7 @@ var (
 		TokenURL:  "https://www.linkedin.com/oauth/v2/accessToken",
 		AuthStyle: oauth2.AuthStyleInParams,
 	}
-	defaultHeaders = map[string]string{
-		"Linkedin-Version": "202305",
-	}
+	defaultVersion = "202405"
 )
 
 // builderInterface is the interface that wraps the basic GetAuthURL and GetClient methods.
@@ -23,13 +21,26 @@ type BuilderInterface interface {
 	GetClient(ctx context.Context, code string) (ClientInterface, error)
 }
 
+type NewBuilderParams struct {
+	ClientID     string
+	ClientSecret string
+	Scopes       []string
+	RedirectURL  string
+	APIVersion   string
+}
+
 // Newbuilder returns a new linkedin client, not yet authenticated.
-func NewBuilder(clientID string, clientSecret string, scopes []string, redirectURL string) BuilderInterface {
+func NewBuilder(params NewBuilderParams) BuilderInterface {
+	apiVersion := params.APIVersion
+	if apiVersion == "" {
+		apiVersion = defaultVersion
+	}
 	return &builder{
-		clientID:     clientID,
-		clientSecret: clientSecret,
-		scopes:       scopes,
-		redirectURL:  redirectURL,
+		clientID:     params.ClientID,
+		clientSecret: params.ClientSecret,
+		scopes:       params.Scopes,
+		redirectURL:  params.RedirectURL,
+		apiVersion:   apiVersion,
 	}
 }
 
@@ -44,6 +55,8 @@ type builder struct {
 	// redirectURL is the URL that the user will be redirected to after
 	// authenticating with linkedin in the GetAuthURL url response.
 	redirectURL string
+	// apiVersion is the version of the linkedin API that will be used.
+	apiVersion string
 }
 
 // getOAuth2Config returns the oauth2 config
@@ -76,6 +89,8 @@ func (c *builder) GetClient(ctx context.Context, code string) (ClientInterface, 
 		return nil, err
 	}
 	client := oa2config.Client(ctx, token)
-	new := NewClient(*client, defaultHeaders)
+	new := NewClient(*client, map[string]string{
+		"Linkedin-Version": c.apiVersion,
+	})
 	return new, nil
 }

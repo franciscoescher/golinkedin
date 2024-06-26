@@ -105,7 +105,12 @@ func main() {
 	fullRedirectURL := fmt.Sprintf("%s:%s%s", redirect_host, redirect_port, redirect_callback_url)
 
 	// add r_basicprofile to enable GetProfile (if you have the permission)
-	c := golinkedin.NewBuilder(clientId, clientSecret, []string{"r_liteprofile", "r_emailaddress"}, fullRedirectURL)
+	c := golinkedin.NewBuilder(golinkedin.NewBuilderParams{
+		ClientID:     clientId,
+		ClientSecret: clientSecret,
+		Scopes:       []string{"r_liteprofile", "r_emailaddress"},
+		RedirectURL:  fullRedirectURL,
+	})
 
 	// to run this test, you need to uncomment the following line and
 	// visit the URL in your browser. You will be redirected to the
