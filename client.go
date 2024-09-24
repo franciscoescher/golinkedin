@@ -19,6 +19,7 @@ type ClientInterface interface {
 	GetPeopleList(personIDs []string) (r string, err error)
 	ProfileRequest() (resp *http.Response, err error)
 	GetProfile() (r Profile, err error)
+	GetSnapshot(req SnapshotRequest) (r Snapshot, err error)
 }
 
 type client struct {
